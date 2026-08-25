@@ -213,3 +213,87 @@ publish any of them.*
   abstract page is the accessible route.
 - Whether the Applied Geophysics Center publishes profile data directly. The
   old directory URL (`unlv.edu/engineering/agcd`) now 404s.
+
+---
+
+## Source documents held locally
+
+Downloaded to `refs/` (gitignored — these are large, and freely available from
+the links below rather than needing to be vendored here).
+
+**USGS, public domain — the actual origin of the basin-thickness data:**
+- Langenheim and others, **OF-98-576**, *Thickness of Cenozoic deposits and
+  location and geometry of the Las Vegas Valley shear zone, Nevada* —
+  https://pubs.usgs.gov/of/1998/0576/report.pdf
+- Langenheim and others, **OF-97-441**, *Preliminary location and geometry of the
+  Las Vegas Valley shear zone based on gravity and aeromagnetic data* —
+  https://pubs.usgs.gov/of/1997/0441/report.pdf
+- Langenheim and others, **OF-96-259**, *Thickness of Cenozoic deposits and
+  groundwater storage capacity, westernmost Las Vegas Valley* —
+  https://pubs.usgs.gov/of/1996/0259/report.pdf
+- **OF-99-435**, *Principal facts for gravity stations, Lake Mead 30' x 60'
+  quadrangle* — https://pubs.usgs.gov/of/1999/0435/pdf/of99-435.pdf
+
+**Paywalled — cite, do not redistribute:**
+- Langenheim and others (2001), *Geophysical constraints on the location and
+  geometry of the Las Vegas Valley shear zone*, **Tectonics** 20(2), 189–209,
+  doi:10.1029/1999TC001159. Wiley returns 403.
+- Scott and others (2006), BSSA 96(3), doi:10.1785/0120050044.
+
+### What the authors themselves say about the uncertainty
+
+From OF-98-576, on the seismic interval velocities used to convert to depth:
+
+> It is difficult to assess the uncertainties in these interval velocities
+> because of the lack of well logs and check shots. The error is probably +/- 10%,
+> but could be as high as +/- 20%. Velocities are poorly constrained beneath
+> 2.0 s (approximately 3 km).
+
+**This matters directly.** The deepest part of the valley in our model is 4.9 km
+— below the depth the authors describe as poorly constrained. The headline number
+is the least certain one, and any public presentation must say so.
+
+Gravity station elevation uncertainty is given as <0.3 m (<0.06 mGal); terrain
+correction error is put at up to 3.3 mGal worst case, averaging far less.
+
+### Independent agreement
+
+Published work reports the deepest subbasin at roughly **5 km, about 5 km west of
+Frenchman Mountain**. Our build, from the derived grid, puts it at **4.90 km,
+6.2 km west** of the DEM-verified Frenchman crest. Depth agrees within 0.1 km and
+direction agrees. That is reassuring, not proof.
+
+---
+
+## Nevada Division of Water Resources — well driller reports
+
+https://arcgis.water.nv.gov/arcgis/rest/services/NDWR/Well_Driller_Reports/FeatureServer/0
+145,746 records statewide; **41,996 inside the Las Vegas valley bounding box**.
+Nevada requires a filed log for every well, so this is public record.
+
+Populated fields, within the valley:
+
+| Field | Records | Usable? |
+|---|---|---|
+| DepthDrilled | 40,506 | yes |
+| StaticWaterLevel | 31,643 | yes |
+| both together | 31,610 | yes |
+| **DepthBedrock** | **3** | **no — effectively empty** |
+
+**The bedrock-validation idea does not work.** Only three wells in the entire
+valley report a depth to bedrock, so the gravity model cannot be checked against
+drilled rock depth using this dataset. Recording that here so it is not
+re-attempted.
+
+**Privacy — binding constraint.** The layer also carries `OwnerCurrent`,
+`OwnerAddress`, `ParcelNumber`, `ContractorName` and `ContractorAddress`. Those
+are private individuals' names and home addresses. `tools/fetch_wells.py`
+requests **only** `DepthDrilled` and `StaticWaterLevel`, and the stored file was
+audited to confirm it contains nothing but four numbers per row. Do not add
+owner, address, parcel, or contractor fields: public record status does not make
+it appropriate to republish someone's name and home address on a map.
+
+**Known data-quality problems** in the raw records, to be filtered before use:
+33 wells report a static water level deeper than the hole was drilled
+(impossible), 7 exceed 2,000 ft with one implausible 15,000 ft entry, and the
+depth distribution is heavily skewed (median 50 ft, p99 922 ft).
