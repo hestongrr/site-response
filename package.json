@@ -1,0 +1,10 @@
+{
+  "name": "site-response",
+  "version": "0.1.0",
+  "description": "Interactive 1D seismic site response -- why soft ground shakes harder",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "test": "node test/transfer.test.js"
+  }
+}

@@ -1,0 +1,68 @@
+<div class="sr" id="why">
+<div class="presets">
+  <button data-p="180,30,1800,5">Soft alluvium basin</button>
+  <button data-p="120,25,1600,7">Very soft clay</button>
+  <button data-p="350,20,1950,3">Stiff soil</button>
+  <button data-p="650,15,2100,2">Dense gravel / weak rock</button>
+</div>
+
+<fieldset>
+  <legend>The soil layer</legend>
+  <div class="row"><label for="vs">Shear wave velocity, V<sub>s</sub></label>
+    <input type="range" id="vs" min="80" max="760" step="5" value="180"><output id="vsO"></output></div>
+  <div class="row"><label for="h">Layer thickness, H</label>
+    <input type="range" id="h" min="3" max="120" step="1" value="30"><output id="hO"></output></div>
+  <div class="row"><label for="rho">Density, &rho;</label>
+    <input type="range" id="rho" min="1400" max="2200" step="10" value="1800"><output id="rhoO"></output></div>
+  <div class="row"><label for="xi">Damping ratio, &xi;</label>
+    <input type="range" id="xi" min="1" max="20" step="0.5" value="5"><output id="xiO"></output></div>
+</fieldset>
+
+<fieldset>
+  <legend>The rock underneath</legend>
+  <div class="row"><label for="rvs">Rock shear wave velocity</label>
+    <input type="range" id="rvs" min="400" max="3000" step="20" value="760"><output id="rvsO"></output></div>
+  <div class="row"><label for="rrho">Rock density</label>
+    <input type="range" id="rrho" min="1900" max="2900" step="10" value="2200"><output id="rrhoO"></output></div>
+</fieldset>
+
+<h2>What this ground does</h2>
+<table>
+  <tr><td>Natural period of the soil column, T<sub>site</sub></td><td class="big" id="rT"></td></tr>
+  <tr><td>&hellip;the same thing as a frequency, f<sub>0</sub></td><td id="rF"></td></tr>
+  <tr><td>Impedance ratio soil&nbsp;/&nbsp;rock, &alpha;</td><td id="rA"></td></tr>
+  <tr><td>Strongest amplification, surface vs. rock</td><td class="big" id="rAmp"></td></tr>
+  <tr><td>Buildings most at risk here</td><td id="rStory"></td></tr>
+</table>
+
+<h2>Worked out, step by step</h2>
+<pre id="work"></pre>
+
+<h2>Amplification at every period</h2>
+<canvas id="plot" width="800" height="360"></canvas>
+<p class="note">How many times harder the soil surface shakes than bare rock would, for shaking
+of each period. The tall spike is resonance. A building whose own period lands under that spike
+is being pushed in time with its own swing.</p>
+
+<h2>What this does and does not tell you</h2>
+<p>This tells you <strong>how hard the ground shakes</strong>. It does not tell you how to build a
+house that survives it. Those are different problems, and the second one kills far more people.</p>
+<p>Whether a house stands up is decided by much plainer things: a continuous tie beam at the top of
+the walls, reinforced corners, enough wall length in both directions, and a roof actually fastened
+to the walls. If that is what you need, these people already do it properly and for free:</p>
+<ul>
+  <li><a href="https://buildchange.org/">Build Change</a> &mdash; safe self-built and retrofitted housing</li>
+  <li><a href="https://www.world-housing.net/">World Housing Encyclopedia</a> (EERI/IAEE) &mdash; housing types by country, and how each one fails</li>
+  <li><a href="https://www.globalquakemodel.org/">GEM Foundation</a> &mdash; open global seismic hazard and risk models</li>
+</ul>
+
+<div class="warn">
+<strong>This is not engineering advice.</strong> It is a teaching model: one uniform layer, linear
+elastic soil, vertically travelling shear waves. Real ground is layered, gets softer as it is shaken
+harder, and can liquefy. Basin edges and hillsides add amplification this ignores entirely. Nothing
+here is a site-specific evaluation or a substitute for a licensed engineer where you live.
+</div>
+
+<p class="note">Formulation follows Kramer, <em>Geotechnical Earthquake Engineering</em> (1996), Ch.&nbsp;7.
+Open source, MIT licensed. Verified against closed-form cases &mdash; the checks are in the repository.</p>
+</div>

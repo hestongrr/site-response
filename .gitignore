@@ -1,0 +1,14 @@
+node_modules/
+
+# Third-party data: re-fetch with data/nevada-vs30/fetch.sh rather than vendoring
+# 24 MB of someone else's dataset into this repo. See its ATTRIBUTION.md.
+data/nevada-vs30/*.zip
+data/nevada-vs30/*.pdf
+data/nevada-vs30/extracted/
+
+# The site build uses Heston's own thebigpicture.tech design, which is NOT public.
+# Its shell + chrome live outside this repo in ~/private/site-response-site-build/
+# and build.js only produces the site page when that directory is present.
+dist/site-response.html
+web/site*.html
+web/site-chrome.css
