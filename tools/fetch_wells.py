@@ -20,7 +20,7 @@ URL = ("https://arcgis.water.nv.gov/arcgis/rest/services/NDWR/"
        "Well_Driller_Reports/FeatureServer/0/query")
 BBOX = {"xmin": -115.464, "ymin": 35.934, "xmax": -114.831, "ymax": 36.487,
         "spatialReference": {"wkid": 4326}}
-FIELDS = "DepthDrilled,StaticWaterLevel"     # geotechnical only -- see note above
+FIELDS = "DepthDrilled,StaticWaterLevel,WellFinishDate"   # geotechnical only -- see note above
 PAGE = 2000
 
 def page(offset):
@@ -43,8 +43,12 @@ while True:
         g, a = f.get("geometry"), f["attributes"]
         if not g or g.get("x") is None:
             continue
+        fin = a.get("WellFinishDate")
+        yr = 0
+        if fin:                       # epoch ms -> year, so we can see the time smear
+            yr = time.gmtime(fin / 1000).tm_year
         out.append([round(g["x"], 6), round(g["y"], 6),
-                    a["DepthDrilled"], a["StaticWaterLevel"]])
+                    a["DepthDrilled"], a["StaticWaterLevel"], yr])
     print(f"  {len(out):6d} wells", flush=True)
     if not d.get("exceededTransferLimit"):
         break
@@ -52,7 +56,7 @@ while True:
     time.sleep(0.4)                      # be polite to a state agency's server
 
 dest = sys.argv[1] if len(sys.argv) > 1 else "data/derived/las-vegas-wells.json"
-json.dump({"fields": ["lon", "lat", "depth_drilled_ft", "static_water_level_ft"],
+json.dump({"fields": ["lon", "lat", "depth_drilled_ft", "static_water_level_ft", "finish_year"],
            "count": len(out),
            "source": ("Nevada Division of Water Resources, Well Driller Reports. "
                       "Public record. Owner/address/parcel/contractor fields "
