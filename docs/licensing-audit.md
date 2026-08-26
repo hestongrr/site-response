@@ -130,3 +130,77 @@ institutional and government sources cited.
 - **No client data.** Nothing from any Angle Engineering or GeoTek project, no
   job numbers, no boring logs. Everything here comes from published or openly
   licensed sources. This is a hard line and it must stay one.
+
+---
+
+# Commercial use — component by component
+
+Checked 2026-08-25. **Short answer: yes, everything currently used is free for
+commercial use.** Two components require attribution, and one non-copyright risk
+matters more than any of this.
+
+*Not legal advice. Verify anything load-bearing before relying on it.*
+
+| Component | Licence | Commercial use | Attribution |
+|---|---|---|---|
+| Basin depth — Simpson & Louie 2020 | **CC-BY-4.0** | ✅ Yes, explicitly | **Required** |
+| Well logs — NDWR Well Driller Reports | **CC0-1.0** | ✅ Yes | Not required (still courteous) |
+| Elevation — USGS 3DEP | US federal, public domain | ✅ Yes | Not required |
+| Langenheim USGS open-file reports | US federal, public domain | ✅ Yes | Not required |
+| Three.js + OrbitControls | MIT | ✅ Yes | Licence text must be retained |
+| This repository's own code | MIT | ✅ Yes | Licence text must be retained |
+
+Sources for the two licence claims that are not simply "federal":
+- Simpson & Louie: Zenodo record 4408557 metadata, `license.id = cc-by-4.0`.
+- NDWR: the Nevada Division of Water Resources item on ArcGIS Hub reports
+  `license: CC0-1.0`, "CC0 1.0 Universal". Note the parent department (NDCNR)
+  lists the same service with `license: none`; the NDWR-owned item is the one
+  carrying the explicit dedication. The service's own `copyrightText` is just
+  "NDWR" with no licence grant, so keep this note as the evidence.
+
+## Cite, but never redistribute
+
+Copyrighted papers we rely on for facts. **Facts and data are not copyrightable
+in the US, so the numbers and findings may be used commercially** — but the
+articles themselves may not be re-hosted.
+
+- Scott and others (2006), BSSA 96(3) — © Seismological Society of America
+- Langenheim and others (2001), Tectonics 20(2) — © AGU/Wiley
+- Kramer, *Geotechnical Earthquake Engineering* (1996) — equations are not
+  copyrightable; the derivation here is written independently
+
+State and university material (NBMG, Nevada Seismological Laboratory, UNLV) is
+linked, not re-hosted. State works are not automatically public domain.
+
+## The risk that actually matters is not copyright
+
+Every licence above permits commercial use. **Professional liability does not
+work like copyright, and it is the real exposure.**
+
+Selling, or charging for, output that looks like geotechnical information
+invites reliance on it. If someone makes a construction, foundation, purchase, or
+insurance decision on the basis of a regional gravity model and is harmed, the
+question asked will be about the standard of care and about who was licensed to
+provide that information — not about whether the input data was CC0.
+
+Heston Norcott is an **Engineer Intern (Nevada #0T5698), not a licensed
+Professional Engineer**. Under Nevada law that distinction governs what may be
+offered as engineering. Practical consequences:
+
+- ✅ Fine: educational content, visualisations, explanatory media, ad or sponsor
+  revenue on that content, speaking or teaching about it.
+- ⚠️ Requires real thought: selling it as a product, or to AEC clients, where the
+  buyer's purpose is to inform a project decision.
+- ❌ Not available: anything presented as a site-specific evaluation, a design
+  value, a seismic site classification, or a sealed deliverable.
+
+The published page states this and disclaims reliance. Keep that disclaimer on
+any commercial derivative, and keep the "regional model, not your site" framing
+in front of the numbers rather than buried under them.
+
+## Trademark and endorsement
+
+Licences cover copyright, not names and marks. Do not use USGS, UNLV, NBMG, or
+NDWR logos, and do not word anything so it reads as their endorsement or
+partnership. Naming them as data sources is correct; implying they blessed the
+product is not.
