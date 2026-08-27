@@ -1,0 +1,409 @@
+{
+ "source": "USGS Geographic Names Information System (GNIS), The National Map. US federal work \u2014 public domain.",
+ "retrieved": "2026-08-26",
+ "count": 67,
+ "places": [
+  {
+   "name": "Apex Summit",
+   "class": "Gap",
+   "lat": 36.31942,
+   "lon": -114.93973
+  },
+  {
+   "name": "Cottonwood Pass",
+   "class": "Gap",
+   "lat": 35.95637,
+   "lon": -115.44168
+  },
+  {
+   "name": "Dutchman Pass",
+   "class": "Gap",
+   "lat": 35.96443,
+   "lon": -114.97278
+  },
+  {
+   "name": "Railroad Pass",
+   "class": "Gap",
+   "lat": 35.9786,
+   "lon": -114.91639
+  },
+  {
+   "name": "Yucca Gap",
+   "class": "Gap",
+   "lat": 36.44553,
+   "lon": -115.26197
+  },
+  {
+   "name": "Apex",
+   "class": "Populated Place",
+   "lat": 36.32914,
+   "lon": -114.92779
+  },
+  {
+   "name": "Arden",
+   "class": "Populated Place",
+   "lat": 36.01803,
+   "lon": -115.23084
+  },
+  {
+   "name": "Arrolime",
+   "class": "Populated Place",
+   "lat": 36.35137,
+   "lon": -114.90918
+  },
+  {
+   "name": "Bard",
+   "class": "Populated Place",
+   "lat": 35.98776,
+   "lon": -115.23751
+  },
+  {
+   "name": "Blue Diamond",
+   "class": "Populated Place",
+   "lat": 36.04636,
+   "lon": -115.4039
+  },
+  {
+   "name": "Bonanza Village",
+   "class": "Populated Place",
+   "lat": 36.18303,
+   "lon": -115.16529
+  },
+  {
+   "name": "Bonnie Springs",
+   "class": "Populated Place",
+   "lat": 36.05914,
+   "lon": -115.45335
+  },
+  {
+   "name": "Boulder City",
+   "class": "Populated Place",
+   "lat": 35.9786,
+   "lon": -114.8325
+  },
+  {
+   "name": "Boulder Junction",
+   "class": "Populated Place",
+   "lat": 36.08109,
+   "lon": -115.19807
+  },
+  {
+   "name": "Bracken",
+   "class": "Populated Place",
+   "lat": 36.10748,
+   "lon": -115.19112
+  },
+  {
+   "name": "Carver Park",
+   "class": "Populated Place",
+   "lat": 36.04637,
+   "lon": -114.9775
+  },
+  {
+   "name": "Dike",
+   "class": "Populated Place",
+   "lat": 36.30136,
+   "lon": -115.01335
+  },
+  {
+   "name": "Dry Lake",
+   "class": "Populated Place",
+   "lat": 36.45664,
+   "lon": -114.84307
+  },
+  {
+   "name": "East Las Vegas",
+   "class": "Populated Place",
+   "lat": 36.09442,
+   "lon": -115.04195
+  },
+  {
+   "name": "Eastland Heights",
+   "class": "Populated Place",
+   "lat": 36.1922,
+   "lon": -115.18807
+  },
+  {
+   "name": "Enterprise",
+   "class": "Populated Place",
+   "lat": 36.02526,
+   "lon": -115.24195
+  },
+  {
+   "name": "Garnet",
+   "class": "Populated Place",
+   "lat": 36.38859,
+   "lon": -114.87112
+  },
+  {
+   "name": "Henderson",
+   "class": "Populated Place",
+   "lat": 36.0397,
+   "lon": -114.98195
+  },
+  {
+   "name": "Lake Las Vegas",
+   "class": "Populated Place",
+   "lat": 36.10292,
+   "lon": -114.92958
+  },
+  {
+   "name": "Las Vegas",
+   "class": "Populated Place",
+   "lat": 36.17498,
+   "lon": -115.13723
+  },
+  {
+   "name": "Lovell",
+   "class": "Populated Place",
+   "lat": 36.29136,
+   "lon": -115.04307
+  },
+  {
+   "name": "Mountain's Edge",
+   "class": "Populated Place",
+   "lat": 36.02498,
+   "lon": -115.24251
+  },
+  {
+   "name": "North Las Vegas",
+   "class": "Populated Place",
+   "lat": 36.19886,
+   "lon": -115.11751
+  },
+  {
+   "name": "Paradise",
+   "class": "Populated Place",
+   "lat": 36.0972,
+   "lon": -115.14668
+  },
+  {
+   "name": "Sloan",
+   "class": "Populated Place",
+   "lat": 35.94359,
+   "lon": -115.21723
+  },
+  {
+   "name": "Spring Valley",
+   "class": "Populated Place",
+   "lat": 36.10803,
+   "lon": -115.24501
+  },
+  {
+   "name": "Sunrise Manor",
+   "class": "Populated Place",
+   "lat": 36.21109,
+   "lon": -115.07307
+  },
+  {
+   "name": "Texas Acres",
+   "class": "Populated Place",
+   "lat": 35.97498,
+   "lon": -114.91306
+  },
+  {
+   "name": "Valley",
+   "class": "Populated Place",
+   "lat": 36.27414,
+   "lon": -115.0714
+  },
+  {
+   "name": "Vegas Heights",
+   "class": "Populated Place",
+   "lat": 36.19942,
+   "lon": -115.1564
+  },
+  {
+   "name": "Victory Village",
+   "class": "Populated Place",
+   "lat": 36.0372,
+   "lon": -114.97611
+  },
+  {
+   "name": "Wann",
+   "class": "Populated Place",
+   "lat": 36.23331,
+   "lon": -115.11335
+  },
+  {
+   "name": "Whitney",
+   "class": "Populated Place",
+   "lat": 36.07081,
+   "lon": -115.08417
+  },
+  {
+   "name": "Winchester",
+   "class": "Populated Place",
+   "lat": 36.12998,
+   "lon": -115.1189
+  },
+  {
+   "name": "Arrow Canyon Range",
+   "class": "Range",
+   "lat": 36.66306,
+   "lon": -114.88737
+  },
+  {
+   "name": "Bird Spring Range",
+   "class": "Range",
+   "lat": 35.89261,
+   "lon": -115.38974
+  },
+  {
+   "name": "Dry Lake Range",
+   "class": "Range",
+   "lat": 36.35366,
+   "lon": -114.86419
+  },
+  {
+   "name": "Frenchman Range",
+   "class": "Range",
+   "lat": 36.20265,
+   "lon": -114.97335
+  },
+  {
+   "name": "Gale Hills",
+   "class": "Range",
+   "lat": 36.24364,
+   "lon": -114.77683
+  },
+  {
+   "name": "Las Vegas Range",
+   "class": "Range",
+   "lat": 36.57136,
+   "lon": -115.03641
+  },
+  {
+   "name": "McCullough Range",
+   "class": "Range",
+   "lat": 35.60286,
+   "lon": -115.18
+  },
+  {
+   "name": "River Mountains",
+   "class": "Range",
+   "lat": 36.01211,
+   "lon": -114.84723
+  },
+  {
+   "name": "Sheep Range",
+   "class": "Range",
+   "lat": 36.65765,
+   "lon": -115.20089
+  },
+  {
+   "name": "Sheep Range",
+   "class": "Range",
+   "lat": 36.65765,
+   "lon": -115.20089
+  },
+  {
+   "name": "Fossil Ridge",
+   "class": "Ridge",
+   "lat": 36.4437,
+   "lon": -115.20878
+  },
+  {
+   "name": "Rainbow Gardens",
+   "class": "Ridge",
+   "lat": 36.14271,
+   "lon": -114.9493
+  },
+  {
+   "name": "Black Hill",
+   "class": "Summit",
+   "lat": 35.94784,
+   "lon": -114.9472
+  },
+  {
+   "name": "Black Mountain",
+   "class": "Summit",
+   "lat": 36.00648,
+   "lon": -114.8522
+  },
+  {
+   "name": "Blue Diamond Hill",
+   "class": "Summit",
+   "lat": 36.09644,
+   "lon": -115.39769
+  },
+  {
+   "name": "Calico Hills",
+   "class": "Summit",
+   "lat": 36.16533,
+   "lon": -115.43268
+  },
+  {
+   "name": "Castle Rock",
+   "class": "Summit",
+   "lat": 36.39874,
+   "lon": -115.2461
+  },
+  {
+   "name": "Corn Creek Dunes",
+   "class": "Summit",
+   "lat": 36.44025,
+   "lon": -115.35669
+  },
+  {
+   "name": "Exploration Peak",
+   "class": "Summit",
+   "lat": 36.0173,
+   "lon": -115.25862
+  },
+  {
+   "name": "Frenchman Mountain",
+   "class": "Summit",
+   "lat": 36.17918,
+   "lon": -114.99766
+  },
+  {
+   "name": "Gass Peak",
+   "class": "Summit",
+   "lat": 36.40052,
+   "lon": -115.18029
+  },
+  {
+   "name": "La Madre Mountain",
+   "class": "Summit",
+   "lat": 36.21247,
+   "lon": -115.45907
+  },
+  {
+   "name": "Lava Butte",
+   "class": "Summit",
+   "lat": 36.14878,
+   "lon": -114.93713
+  },
+  {
+   "name": "Lone Mountain",
+   "class": "Summit",
+   "lat": 36.23813,
+   "lon": -115.31504
+  },
+  {
+   "name": "Mount Scorpion",
+   "class": "Summit",
+   "lat": 35.95866,
+   "lon": -114.94315
+  },
+  {
+   "name": "Sunrise Mountain",
+   "class": "Summit",
+   "lat": 36.22442,
+   "lon": -114.97705
+  },
+  {
+   "name": "Turtlehead Mountain",
+   "class": "Summit",
+   "lat": 36.18033,
+   "lon": -115.44575
+  },
+  {
+   "name": "Whitney Mesa",
+   "class": "Summit",
+   "lat": 36.07581,
+   "lon": -115.07029
+  }
+ ]
+}
