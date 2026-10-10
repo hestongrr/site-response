@@ -19,76 +19,127 @@ caliche was missed entirely by OCR). Consequences:
 Depth numbers near a "caliche" token are stored as *candidates* for human
 review (the same row can be a casing-schedule column, not lithology depth).
 """
-import json, re, sys
+import argparse, json, re, sys, time
 from pathlib import Path
 
-OCR_DIR = Path("/home/heston/geo-ref/05_Maps_Data/NDWR_WellLogs/scanned_logs/ocr_text")
-META = Path("/home/heston/geo-ref/05_Maps_Data/NDWR_WellLogs/scanned_logs/well_metadata.json")
-DEST = (Path(sys.argv[1]) if len(sys.argv) > 1
-        else Path("/home/heston/repos/site-response/data/derived/"
-                  "caliche-well-mentions.json"))
-GEOJSON = DEST.with_suffix(".geojson")
+DEFAULT_OCR_DIR = "/home/heston/geo-ref/05_Maps_Data/NDWR_WellLogs/scanned_logs/ocr_text"
+DEFAULT_META = "/home/heston/geo-ref/05_Maps_Data/NDWR_WellLogs/scanned_logs/well_metadata.json"
+DEFAULT_DEST = ("/home/heston/repos/site-response/data/derived/"
+                "caliche-well-mentions.json")
 
-meta = json.load(open(META))
 WORD = re.compile(r"caliche", re.I)
 NUM = re.compile(r"\d+(?:\.\d+)?")
 CTX = 3                                  # context lines carried per mention
 
-features, summary = [], {"logs_scanned": 0, "logs_with_caliche": 0, "mentions": 0}
-for f in sorted(OCR_DIR.glob("*.txt")):
-    summary["logs_scanned"] += 1
-    log = f.stem
-    text = f.read_text(errors="replace").splitlines()
-    hits = [(i, m.start()) for i, l in enumerate(text) for m in WORD.finditer(l)]
-    if not hits:
-        continue
-    summary["logs_with_caliche"] += 1
-    ev = []
-    for i, col in hits:
-        summary["mentions"] += 1
-        lo, hi = max(0, i - CTX), min(len(text), i + CTX + 1)
-        ctx = [l.strip() for l in text[lo:hi] if l.strip()]
-        row_nums = NUM.findall(" ".join(text[max(0, i - 1): i + 2]))
-        ev.append({"context": ctx, "depth_candidates_ft": [float(n) for n in row_nums]})
-    m = meta.get(log, {})
-    lat, lon = m.get("latitude"), m.get("longitude")
-    if lat is None or lon is None:
-        continue
-    features.append({
-        "type": "Feature",
-        "geometry": {"type": "Point", "coordinates": [round(lon, 6), round(lat, 6)]},
-        "properties": {
-            "log": log,
-            "caliche_mentions": len(ev),
-            "evidence": ev,
-            "depth_drilled_ft": m.get("DepthDrilled"),
-            "static_water_level_ft": m.get("StaticWaterLevel"),
-            "finish_year": None if not m.get("WellFinishDate") else
-                __import__("time").gmtime(m["WellFinishDate"] / 1000).tm_year,
+
+def find_mentions(lines):
+    """(line_index, column) of every 'caliche' token in OCR lines."""
+    return [(i, m.start()) for i, l in enumerate(lines) for m in WORD.finditer(l)]
+
+
+def depth_candidates(lines, i):
+    """Every number on lines i-1..i+1 (the mention row +/- one), as floats."""
+    return [float(n) for n in NUM.findall(" ".join(lines[max(0, i - 1): i + 2]))]
+
+
+def mention_evidence(lines, i, ctx=CTX):
+    lo, hi = max(0, i - ctx), min(len(lines), i + ctx + 1)
+    return {"context": [l.strip() for l in lines[lo:hi] if l.strip()],
+            "depth_candidates_ft": depth_candidates(lines, i)}
+
+
+def finish_year(ms):
+    """WellFinishDate (ms since the Unix epoch, UTC) -> year, or None."""
+    if ms in (None, ""):
+        return None
+    try:
+        return time.gmtime(float(ms) / 1000).tm_year
+    except (TypeError, ValueError, OverflowError, OSError):
+        return None
+
+
+def main(argv=None):
+    ap = argparse.ArgumentParser(description=__doc__.split("\n")[1])
+    ap.add_argument("dest", nargs="?", default=DEFAULT_DEST,
+                    help="output .json (a .geojson twin is written alongside)")
+    ap.add_argument("--ocr-dir", default=DEFAULT_OCR_DIR)
+    ap.add_argument("--meta", default=DEFAULT_META)
+    a = ap.parse_args(argv)
+    ocr_dir, dest = Path(a.ocr_dir), Path(a.dest)
+    geojson = dest.with_suffix(".geojson")
+
+    if not ocr_dir.is_dir():
+        sys.exit(f"error: OCR directory not found: {ocr_dir} (use --ocr-dir)")
+    if not Path(a.meta).is_file():
+        sys.exit(f"error: well metadata not found: {a.meta} (use --meta)")
+    with open(a.meta) as fh:
+        meta = json.load(fh)
+
+    features, summary = [], {"logs_scanned": 0, "logs_with_caliche": 0, "mentions": 0}
+    no_coords = []
+    for f in sorted(ocr_dir.glob("*.txt")):
+        summary["logs_scanned"] += 1
+        log = f.stem
+        text = f.read_text(errors="replace").splitlines()
+        hits = find_mentions(text)
+        if not hits:
+            continue
+        summary["logs_with_caliche"] += 1
+        ev = []
+        for i, _col in hits:
+            summary["mentions"] += 1
+            ev.append(mention_evidence(text, i))
+        m = meta.get(log, {})
+        lat, lon = m.get("latitude"), m.get("longitude")
+        if lat is None or lon is None:
+            no_coords.append(log)
+            continue
+        features.append({
+            "type": "Feature",
+            "geometry": {"type": "Point", "coordinates": [round(lon, 6), round(lat, 6)]},
+            "properties": {
+                "log": log,
+                "caliche_mentions": len(ev),
+                "evidence": ev,
+                "depth_drilled_ft": m.get("DepthDrilled"),
+                "static_water_level_ft": m.get("StaticWaterLevel"),
+                "finish_year": finish_year(m.get("WellFinishDate")),
+            },
+        })
+
+    if summary["logs_scanned"] == 0:
+        sys.exit(f"error: no *.txt OCR files in {ocr_dir}")
+
+    out = {
+        "type": "FeatureCollection",
+        "name": "caliche-well-mentions",
+        "summary": {
+            **summary,
+            "wells_geocoded": len(features),
+            "note": ("OCR of handwritten geology is unreliable: POSITIVE matches "
+                     "indicate caliche, ABSENCE of a match proves nothing. Depth "
+                     "candidates are for human review, not final numbers."),
         },
-    })
+        "source": ("Nevada Division of Water Resources scanned well-driller reports "
+                   "(public record) + well_metadata.json. Private fields excluded."),
+        "features": features,
+    }
 
-out = {
-    "type": "FeatureCollection",
-    "name": "caliche-well-mentions",
-    "summary": {
-        **summary,
-        "wells_geocoded": len(features),
-        "note": ("OCR of handwritten geology is unreliable: POSITIVE matches "
-                 "indicate caliche, ABSENCE of a match proves nothing. Depth "
-                 "candidates are for human review, not final numbers."),
-    },
-    "source": ("Nevada Division of Water Resources scanned well-driller reports "
-               "(public record) + well_metadata.json. Private fields excluded."),
-    "features": features,
-}
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    for path in (dest, geojson):
+        with open(path, "w") as fh:
+            json.dump(out, fh, indent=1)
+    s = summary
+    print(f"logs scanned       : {s['logs_scanned']}")
+    print(f"logs w/ caliche    : {s['logs_with_caliche']}")
+    print(f"caliche mentions   : {s['mentions']}")
+    print(f"wells geocoded     : {len(features)}")
+    if no_coords:
+        print(f"WARNING: {len(no_coords)} caliche log(s) dropped, no lat/lon in "
+              f"metadata: {', '.join(no_coords[:10])}"
+              f"{' ...' if len(no_coords) > 10 else ''}", file=sys.stderr)
+    print(f"wrote {dest}  (+ .geojson)")
 
-DEST.parent.mkdir(parents=True, exist_ok=True)
-json.dump(out, open(DEST, "w"), indent=1)
-json.dump(out, open(GEOJSON, "w"), indent=1)
-s = summary
-print(f"logs scanned       : {s['logs_scanned']}")
-print(f"logs w/ caliche    : {s['logs_with_caliche']}")
-print(f"caliche mentions   : {s['mentions']}")
-print(f"wells geocoded     : {len(features)}")
-print(f"wrote {DEST}  (+ .geojson)")
+
+if __name__ == "__main__":
+    main()
