@@ -186,3 +186,69 @@ record. Keep it as a light, one-line color beat — not a pillar.
   do not use in the episode.
 - A knowledgeable commenter will note pedogenic-vs-phreatic nuance; acknowledging
   both routes up front preempts that and matches Heston's field observation.
+
+## Review notes (cloud, 2026-10-09)
+
+Automated technical review. The original text above is untouched. House rule:
+every technical fact names its source. Suggested sources are pointers to check,
+not verified citations — confirm title/number/page before they go on screen.
+
+### A. Claims that look wrong or contradict the data
+
+1. **"Deepest caliche depth-candidates: 69836 (500 ft), 57518 (295), 56569 (200), 57524 (156)" — these equal each well's `depth_drilled_ft`**
+   in `caliche-well-mentions.json` (500, 295, 200, 156). They are very likely
+   the total-depth annotation on the form, not a caliche depth, so using them
+   as the "deep/phreatic end" is circular. The candidate list also contains
+   casing/bit sizes (5, 8, 12, 16.94 in. on 56569) and 0.0 values.
+   *Suggested source:* read the original scanned log images for these logs
+   (NDWR well-log database) before claiming any deep caliche depth.
+2. **"58 of 81 wells finished 2016–2023"** — the JSON gives **56** (2021 = 23 is
+   correct). **"1952–1980: 13 wells"** — the JSON gives **16** with
+   `finish_year` ≤ 1980. *Source:* recompute from `caliche-well-mentions.json`.
+3. **Specimen: "teardrop-shaped (stalactite-family) cementation" on the side that sat in groundwater.**
+   Pendant/stalactitic (gravity) cement is conventionally a *vadose* feature
+   (water draining under gravity), whereas phreatic cement is typically
+   uniform/isopachous or meniscus-free. The two sides may be swapped, and
+   "teardrops point the way the water went" holds for vadose drip only.
+   *Suggested source:* Machette 1985, GSA Spec. Paper 203 (calcic soils of the
+   SW US); Scholle & Ulmer-Scholle 2003, AAPG Memo 77 (cement fabrics).
+4. **"Sink scale = same CaCO3" using LVVWD 75 ppm Ca / 280 ppm.** Valley tap
+   water is mostly Colorado River (Lake Mead) supply, not the local
+   groundwater that precipitated caliche; the analogy is about chemistry, not
+   the same water (the Guardrails section half-says this). 280 ppm ≈ 16.4 gpg
+   (÷17.1) is arithmetically fine. *Source:* LVVWD/SNWA annual water quality
+   report (year and sampling point), plus a source for the groundwater
+   chemistry (USGS WRI 87-4007 as cited).
+5. **"Caliche is why the Strip is stiffer… Vs30 ~500–600 m/s, NEHRP class C."**
+   Class C is 360–760 m/s (ASCE 7-16 Table 20.3-1), so consistent, but the
+   causal claim "caliche raises Vs30" and "geology maps cannot predict it"
+   need the exact statement. *Source:* Scott et al. 2006 — give the full
+   citation (journal/report, page); ASCE 7-16 Table 20.3-1 for the class bounds.
+
+### B. Claims with no named source
+
+| Claim (section) | Suggested source |
+|---|---|
+| Pedogenic horizon "~1–3 m in stable desert soils" (Numbers) | Machette 1985, GSA SP 203; Gile, Peterson & Grossman 1966, Soil Sci. 101 |
+| Gile stages I–VI list and mapping of "III+ = plugged", "laminar cap → pisolites → massive" (Numbers) | Machette 1985 (stages I–VI); Gile et al. 1966 defined only I–IV for gravelly soils — check the stage/feature order |
+| "Drills 4–6 blows on the local in-house scale" (Numbers) | Name the scale; if not published, label it as anecdotal. For a citable proxy: ASTM D1586 (SPT) or ASTM D5878 / ASTM D6032 (rock/weathering classification) |
+| K-horizon "means stable ~10^4–10^5 years" (Two caliches) | Machette 1985 (stage–age tables); Reheis 1999 or Gile et al. 1966 |
+| Phreatic calcrete "thick, massive, deep… under parts of Las Vegas" (Two caliches) | Quade et al. 1995, GSA Bull. (Las Vegas valley spring/wetland deposits); Mann & Horwitz 1979 (groundwater calcrete); Werle & Luke 2007 |
+| Pedogenic mechanism: CO2/carbonic acid, evaporation front at consistent depth (Two caliches) | Machette 1985; Birkeland 1999, *Soils and Geomorphology* |
+| CCSD over-excavation "removes the valley's expansive/collapsible soils" (Hero object) | Clark County Building Code geotechnical/soils chapter (cite section); CCSD or project geotech report |
+| Hero specimen "~15 ft" (Hero object) | Already flagged as soft; no number should be on screen without the project geotech report |
+| Basin fill "3,000–5,000 ft" (Verification table) | Name the author: Plume 1989, USGS WSP 2320-A (Part 1); cite figure/page |
+| USGS "WRI 87-4007 (Dettinger 1987)" (Verification table) | Confirm report number ↔ author/title pairing against the USGS Publications Warehouse before citing |
+| "81 of 637 / 141 mentions" (Numbers, Data) | Reproducible from `tools/mine_caliche_wells.py` + NDWR scanned-log OCR; cite NDWR log database and date of pull |
+| Strip-cluster ages, depths and static levels, centroid/bounds, grid bins (What the records show) | Match `caliche-well-mentions.json` (checked: centroid, bounds, grid bins and static-water median 18.6 ft match; see A.1–A.2 for mismatches) |
+| "Mountains are full of limestone… caves" (Heston's telling) | USGS SIM 2814 as already cited; a cave/karst source for the Spring Mountains (e.g. USFS Spring Mountains NRA) |
+
+### C. Interpretation cautions (not errors)
+
+- The "OCR absence proves nothing" guardrail is correct, but the geocoded
+  count (81/81) also depends on `well_metadata.json` coordinates; the tool now
+  warns on stderr if a caliche log is dropped for lacking lat/lon.
+- "Short, modern wells in the urban core" explains the spatial cluster; the
+  2016–2023 skew is a record-format artifact, as the text already says.
+- Strip "1955–1980" wells include ten-plus 1955 logs — most of that cluster is a
+  single year, not a spread.
