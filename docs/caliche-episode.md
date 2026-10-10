@@ -250,5 +250,6 @@ not verified citations — confirm title/number/page before they go on screen.
   warns on stderr if a caliche log is dropped for lacking lat/lon.
 - "Short, modern wells in the urban core" explains the spatial cluster; the
   2016–2023 skew is a record-format artifact, as the text already says.
-- Strip "1955–1980" wells include ten-plus 1955 logs — most of that cluster is a
-  single year, not a spread.
+- Of the seven Strip-cluster logs listed, five are 1955 (57517, 57524, 57526,
+  57535, 57542), one 1978 (57518), one 1980 (57577) — mostly a single year,
+  not a 1955–1980 spread.
