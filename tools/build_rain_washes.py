@@ -41,8 +41,10 @@ def simplify(pts):
         return list(pts)
     out = [pts[0]]
     for prev, p, nxt in zip(pts, pts[1:], pts[2:]):
-        cross = (p[0] - prev[0]) * (nxt[1] - p[1]) - (p[1] - prev[1]) * (nxt[0] - p[0])
-        if abs(cross) > 1e-9 * max(1.0, abs(p[0]) * abs(p[1])):
+        ax, ay = p[0] - prev[0], p[1] - prev[1]
+        bx, by = nxt[0] - p[0], nxt[1] - p[1]
+        # sin(turn angle) > 1e-9  <=>  not colinear (scale-free, unit-free)
+        if abs(ax * by - ay * bx) > 1e-9 * (ax * ax + ay * ay) ** 0.5 * (bx * bx + by * by) ** 0.5:
             out.append(p)
     out.append(pts[-1])
     return out
